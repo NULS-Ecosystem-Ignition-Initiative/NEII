@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "projectName" : "Nuls Oracles",
+    "NULSToRaise": "100_000",
+    "startDate" : 28137242,
+    "endDate" : 54378534,
+    "github" : "",
+    "raiseAddr": ""
+  },
+  {
+    "id": 2,
+    "projectName" : "Nuls Oracles",
+    "NULSToRaise": "100_000",
+    "startDate" : 28137242,
+    "endDate" : 54378534,
+    "github" : "",
+    "raiseAddr": ""
+  }
+]

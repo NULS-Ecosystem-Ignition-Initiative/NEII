@@ -4,7 +4,7 @@ import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import Link from "next/link";
 import {ModalInvest} from "../components/ModalInvest";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,6 +12,22 @@ export default function Home() {
 
     const [showModal, setShowModal] = useState(false);
     const [projectId, setProjectId] = useState(0);
+    const [api, setAPI] = useState([])
+
+    useEffect(() => {
+
+        async function getProjects(){
+            try{
+                const response = await fetch("/projects.json", {
+                    method: "GET",
+                }).then( (res) => res.json()).then((data) => setAPI(data))
+            }catch (error){
+                console.log(error)
+            }
+        }
+        getProjects()
+    }, [])
+
   return (
     <>
       <Head>
@@ -54,31 +70,40 @@ export default function Home() {
                         STATUS
                     </div>
                 </div>
-               <hr/>
-               <div className={styles.listProject}>
-                   <div>
-                       NULS Oracles
-                   </div>
-                   <div>
-                       25x
-                   </div>
-                   <div>
-                       12x
-                   </div>
-                   <div>
-                       <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+
+               {
+                   (api.length > 0 ) ? api.map((coin) => <>
+                           <hr/>
+                       <div className={styles.listProject}>
                            <div>
-                               <button onClick={() => { setShowModal(true); setProjectId(1);}} style={{padding:"10px", cursor:"pointer", border:"0px", color:"white", backgroundColor:"rgb(50, 224, 141)", borderRadius:"4px"}}>Invest</button>
-                           </div>
-                           <div style={{padding:"0px 5px"}}>
-                               <div style={{width:"80px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width:"20%", backgroundColor:"rgb(50, 224, 141)"}}></div></div>
+                               NULS Oracles
                            </div>
                            <div>
-                               20%
+                               25x
                            </div>
-                       </div>
-                   </div>
-               </div>
+                           <div>
+                               12x
+                           </div>
+                           <div>
+                               <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+                                   <div>
+                                       <button onClick={() => { setShowModal(true); setProjectId(1);}} style={{padding:"10px", cursor:"pointer", border:"0px", color:"white", backgroundColor:"rgb(50, 224, 141)", borderRadius:"4px"}}>Invest</button>
+                                   </div>
+                                   <div style={{padding:"0px 5px"}}>
+                                       <div style={{width:"80px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width:"20%", backgroundColor:"rgb(50, 224, 141)"}}></div></div>
+                                   </div>
+                                   <div>
+                                       20%
+                                   </div>
+                               </div>
+                           </div>
+                         </div>
+                           </>
+                   )
+                       :
+                       <>No Projects Listed!</>
+               }
+
            </div>
        </div>
 
