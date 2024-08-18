@@ -27,6 +27,14 @@
   width: auto;
 }
 
+.listDescription{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+}
+
 .description {
   display: inherit;
   justify-content: inherit;

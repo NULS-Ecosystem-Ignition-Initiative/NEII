@@ -2,19 +2,48 @@
   {
     "id": 1,
     "projectName" : "Nuls Oracles",
-    "NULSToRaise": "100_000",
+    "NULSToRaise": 100000,
     "startDate" : 28137242,
     "endDate" : 54378534,
     "github" : "",
-    "raiseAddr": ""
-  },
-  {
-    "id": 2,
-    "projectName" : "Nuls Oracles",
-    "NULSToRaise": "100_000",
-    "startDate" : 28137242,
-    "endDate" : 54378534,
-    "github" : "",
-    "raiseAddr": ""
+    "raiseAddr": "",
+    "maxROI": "-",
+    "poolAddr": "",
+    "github": "https://github.com/NULS-Ecosystem-Ignition-Initiative/NEII-Nuls-Oracles",
+    "description" : [
+      {
+        "name": "Min 2 Servers Up Running for 3 years",
+        "amount" : 9000
+      },
+      {
+        "name": "Website Domain 3 years",
+        "amount" : 375
+      },
+      {
+        "name": "Human Development Resources for matainence",
+        "amount" : 15000
+      },
+      {
+        "name": "Smart Contracts Testing/Audit Bounties",
+        "amount" : 2500
+      },
+      {
+        "name": "Dollar Liquidity",
+        "amount" : 50000
+      },
+      {
+        "name": "Others/Marketing",
+        "amount" : 625
+      },
+      {
+        "name": "Lock Program",
+        "amount" : 22500
+      },
+      {
+        "name": "Total",
+        "amount" : 100000
+      }
+
+    ]
   }
 ]
