@@ -8,6 +8,7 @@ import {IoIosArrowDropdownCircle} from "react-icons/io";
 //import styles from '../../styles/Creator/MyPage/MyPage.module.css'
 import {ModalInvest} from "./ModalInvest";
 import Link from "next/link";
+import {LuExternalLink} from "react-icons/lu";
 //import { ConnectButton } from '@rainbow-me/rainbowkit';
 //import Link from "next/link";
 //import {useAccount} from "wagmi";
@@ -153,7 +154,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                             <button onClick={() => { setShowModal(true); setProjectId(1);}} style={{padding:"10px", cursor:"pointer", fontWeight:"bold", border:"0px", color:"white", backgroundColor:"rgb(50, 224, 141)", borderRadius:"4px"}}>Invest</button>
                         </div>
                         <div style={{padding:"0px 5px"}}>
-                            <div style={{width:"80px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width:{perSold}, backgroundColor:"rgb(50, 224, 141)"}}></div></div>
+                            <div style={{width:"80px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width:perSold + "%", backgroundColor:"rgb(50, 224, 141)"}}></div></div>
                         </div>
                         <div>
                             {perSold}%
@@ -198,7 +199,8 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                             borderRadius:"4px",
                             color:"white",
                             border:"0px",
-                            fontWeight:"bold"
+                            fontWeight:"bold",
+                                cursor:"pointer"
                         }}>Withdraw Locked NULS</button>
                     </div>
                 </div>
@@ -206,11 +208,21 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
             <div style={{display:(showMore) ? "block": "none"}}>
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:"10px"}}>
                     <div>
+                        Total Supply
+                    </div>
+                    <div>
+
+                            <span>1.000.000</span>
+
+                    </div>
+                </div>
+                <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:"10px"}}>
+                    <div>
                         Open Source
                     </div>
                     <div>
                         <Link href={coin.github} target="_blank">
-                            <span style={{textDecoration:"underline"}}>Github Repository</span>
+                            <span style={{textDecoration:"underline"}}>Github Repository</span><LuExternalLink />
                         </Link>
                     </div>
                 </div>
@@ -220,7 +232,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                     </div>
                     <div>
                         <Link href={coin.telegram} target="_blank">
-                            <span style={{textDecoration:"underline"}}>{coin.projectName} Group</span>
+                            <span style={{textDecoration:"underline"}}>{coin.projectName} Group</span><LuExternalLink />
                         </Link>
                     </div>
                 </div>

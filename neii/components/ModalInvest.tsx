@@ -35,7 +35,8 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
     const [balanceNuls, setBalanceNuls] = useState("")
     const [balanceToken, setBalanceToken] = useState("")
     const [valueIn, setValueIn] = useState("0")
-
+    const [pricePerNuls, setPricePerNuls] = useState("0")
+    const [alreadyRaised, setAlreadyRaised] = useState("0")
     const [account, setAccount] = useState("")
 
     const ip1 = "https://api.nuls.io/";
@@ -99,6 +100,34 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
         }
 
         allBall()
+
+        async function getPricePerNuls() {
+            const data = {
+                contractAddress: coin.raiseAddr,
+                methodName: "pricePerNuls",
+                methodDesc: "() return BigInteger",
+                args: [],
+            };
+            const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
+            setPricePerNuls(res.result)
+            return res.result;
+        }
+
+        getPricePerNuls()
+
+        async function getAlreadyRaised() {
+            const data = {
+                contractAddress: coin.raiseAddr,
+                methodName: "amountRaised",
+                methodDesc: "() return BigInteger",
+                args: [],
+            };
+            const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
+            setAlreadyRaised(res.result)
+            return res.result;
+        }
+
+        getAlreadyRaised()
 
     },[])
 
@@ -192,7 +221,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                                 Total Amount of Tokens:
                             </div>
                             <div>
-                                29 ORA
+                                {new BigNumber(valueIn).multipliedBy(pricePerNuls).toString()} ORA
                             </div>
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0px"}}>
@@ -200,7 +229,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                                 Already Raised:
                             </div>
                             <div>
-                                2342 NULS
+                                {new BigNumber(alreadyRaised).dividedBy(Math.pow(10,8)).toString()} NULS
                             </div>
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0px"}}>
@@ -208,7 +237,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                                 Price per Nuls:
                             </div>
                             <div>
-                                {balanceToken.toString()} ORA
+                                {pricePerNuls.toString()} ORA
                             </div>
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", padding:"5px 0px"}}>

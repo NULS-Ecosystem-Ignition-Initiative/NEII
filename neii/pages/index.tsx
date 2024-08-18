@@ -10,6 +10,7 @@ import {ListProject} from "../components/ListProject";
 import NaboxWindow from "../types/NaboxWindow";
 import BigNumber from "bignumber.js";
 import axios from "axios";
+import {Menu} from "../components/Menu";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -60,6 +61,7 @@ export default function Home() {
                       rel="stylesheet"/>
       </Head>
       <main className={styles.main} style={{backgroundImage: "linear-gradient(180deg,#0c111c,#0f1421 14.87%,#10131a 29.77%,#19191b 50%)"}}>
+          <Menu account={account}/>
        <div>
            <div style={{textAlign:"center"}}>
                <Image src={"/neii.png"} alt={""} width={100} height={100} style={{borderRadius:"50%"}}/>
