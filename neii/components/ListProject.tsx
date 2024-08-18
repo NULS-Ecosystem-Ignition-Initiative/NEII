@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BigNumber from "bignumber.js";
 import axios from "axios";
-import Image from "next/image";
+//import Image from "next/image";
 import NaboxWindow from "../types/NaboxWindow";
 import styles from "../styles/Home.module.css";
 import {IoIosArrowDropdownCircle} from "react-icons/io";
