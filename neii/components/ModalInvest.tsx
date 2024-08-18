@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BigNumber from "bignumber.js";
-import axios from "axios";
+import axios, {all} from "axios";
 import Image from "next/image";
 import NaboxWindow from "../types/NaboxWindow";
 //import styles from '../../styles/Creator/MyPage/MyPage.module.css'
@@ -28,11 +28,15 @@ interface Props{
     display:boolean,
     displayToggle:any
     project:any
+    coin:any
 }
-export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project}) => {
+export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, coin}) => {
 
     const [balanceNuls, setBalanceNuls] = useState("")
+    const [balanceToken, setBalanceToken] = useState("")
     const [valueIn, setValueIn] = useState("0")
+
+    const [account, setAccount] = useState("")
 
     const ip1 = "https://api.nuls.io/";
 
@@ -45,6 +49,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project})
             const naboxInfo:any = await (window as unknown as NaboxWindow).nabox.createSession();
             console.log(naboxInfo)
             const address = naboxInfo[0];
+            setAccount(address)
             return new Promise((resolve, reject) => {
                 BigNumber.config({ DECIMAL_PLACES: 8 });
 
@@ -74,7 +79,27 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project})
 
             });
         }
+        async function getUserBalance(account: string) {
+            const data = {
+                contractAddress: coin.tokenAddr,
+                methodName: "getUserBalance",
+                methodDesc: "(Address addr) return BigInteger",
+                args: [account],
+            };
+            const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
+            return res.result;
+        }
         getTokenBalance()
+
+        async function allBall(){
+
+            let bal = await getTokenBalance()
+
+            setBalanceToken(bal?.toString)
+        }
+
+        allBall()
+
     },[])
 
     async function max(){
@@ -83,6 +108,28 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project})
             .toString())
 
     }
+
+
+    async function buyTokens(
+        amount: string,
+    ) {
+        const data = {
+            from: account,
+            value: amount,
+            contractAddress: coin.raiseAddr,
+            methodName: "buyTokens",
+            methodDesc:
+                "(Address onBehalfOf, BigInteger amount) return void",
+            args: [account.toString(), BigNumber(amount).multipliedBy(Math.pow(10, 8)).toString()],
+        };
+        const res = await (window as unknown as NaboxWindow).nabox.contractCall(data);
+        return res.toString();
+    }
+
+
+
+
+
 
 
     return(
@@ -131,7 +178,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project})
                                 width:"100%",
                                 borderRadius:"4px",
                                 fontSize:"16px"
-                            }} type="number" value={valueIn} placeholder="Ex: 100 NULS" min="1"/>
+                            }} type="number" value={valueIn} onChange={(e) => setValueIn(e.target.value)} placeholder="Ex: 100 NULS" min="1"/>
                         </div>
                         <div style={{width:"50px"}}>
                             <button
@@ -161,7 +208,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project})
                                 Already Holding:
                             </div>
                             <div>
-                                29 ORA
+                                {balanceToken.toString()} ORA
                             </div>
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", padding:"5px 0px"}}>
@@ -169,13 +216,13 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project})
                                 Project:
                             </div>
                             <div>
-                                29 ORA
+                                {coin.projectName}
                             </div>
                         </div>
                     </div>
                     <div style={{display:"flex",textAlign:"center"}}>
                         <button onClick={() => displayToggle(false)} style={{padding:"5px 10px", borderRadius:"5px", cursor:"pointer", width:"50%"}}>Cancel</button>
-                        <button style={{padding:"8px 10px", borderRadius:"5px", cursor:"pointer", color:"white", width:"50%", backgroundColor:"rgb(50, 224, 141)", border:"0px"}}>Invest</button>
+                        <button onClick={() => buyTokens(valueIn)} style={{padding:"8px 10px", borderRadius:"5px", cursor:"pointer", color:"white", width:"50%", backgroundColor:"rgb(50, 224, 141)", border:"0px"}}>Invest</button>
                     </div>
                 </div>
 

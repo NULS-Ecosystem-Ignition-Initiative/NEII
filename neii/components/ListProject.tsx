@@ -34,6 +34,7 @@ interface Props{
 export const ListProject : React.FC<Props>  = ({coin}) => {
 
     const [balanceNuls, setBalanceNuls] = useState()
+    const [account, setAccount] = useState("")
 
     const ip1 = "https://api.nuls.io/";
 
@@ -49,6 +50,7 @@ export const ListProject : React.FC<Props>  = ({coin}) => {
             const naboxInfo:any = await (window as unknown as NaboxWindow).nabox.createSession();
             console.log(naboxInfo)
             const address = naboxInfo[0];
+            setAccount(address)
             return new Promise((resolve, reject) => {
                 BigNumber.config({ DECIMAL_PLACES: 8 });
 
@@ -78,7 +80,7 @@ export const ListProject : React.FC<Props>  = ({coin}) => {
 
             });
         }
-        getTokenBalance()
+       // getTokenBalance()
     },[])
 
 
@@ -178,7 +180,7 @@ export const ListProject : React.FC<Props>  = ({coin}) => {
 
 
             </div>
-            <ModalInvest display={showModal} displayToggle={setShowModal} project={projectId}/>
+            <ModalInvest display={showModal} displayToggle={setShowModal} project={projectId} coin={coin}/>
         </>
     )
 }
