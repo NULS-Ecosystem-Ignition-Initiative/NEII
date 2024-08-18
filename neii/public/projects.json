@@ -7,9 +7,11 @@
     "endDate" : 54378534,
     "raiseAddr": "NULSd6HgvLVJ3ubjuGVAofTbbTP4VAcK5Q75j",
     "tokenAddr": "NULSd6Hgk51qzobZHEU9GsJbMF6i4ZSZjmKp5",
+    "lockAddr": "NULSd6HguWFfkaXPJ3orrsMmZ3mcwgGCH7MKn",
     "maxROI": "-",
     "poolAddr": "",
     "github": "https://github.com/NULS-Ecosystem-Ignition-Initiative/NEII-Nuls-Oracles",
+    "telegram": "https://t.me/+CQhsKZNaO2NhMTdk",
     "description" : [
       {
         "name": "Min 2 Servers Up Running for 3 years",

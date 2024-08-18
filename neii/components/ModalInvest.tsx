@@ -205,7 +205,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0px"}}>
                             <div>
-                                Already Holding:
+                                Price per Nuls:
                             </div>
                             <div>
                                 {balanceToken.toString()} ORA

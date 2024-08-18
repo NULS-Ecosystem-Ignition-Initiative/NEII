@@ -30,11 +30,11 @@ import Link from "next/link";
 
 interface Props{
     coin:any
+    account:string
 }
-export const ListProject : React.FC<Props>  = ({coin}) => {
+export const ListProject : React.FC<Props>  = ({coin, account}) => {
 
     const [balanceNuls, setBalanceNuls] = useState()
-    const [account, setAccount] = useState("")
 
     const ip1 = "https://api.nuls.io/";
 
@@ -43,6 +43,9 @@ export const ListProject : React.FC<Props>  = ({coin}) => {
     const [showMore, setShowMore] = useState(false);
     const [projectId, setProjectId] = useState(0);
 
+    const [balanceLockNuls, setBalanceLockNuls] = useState("0")
+    const [perSold, setPerBal] = useState("0")
+
     useEffect(() =>{
 
         async function getTokenBalance() {
@@ -50,7 +53,36 @@ export const ListProject : React.FC<Props>  = ({coin}) => {
             const naboxInfo:any = await (window as unknown as NaboxWindow).nabox.createSession();
             console.log(naboxInfo)
             const address = naboxInfo[0];
-            setAccount(address)
+
+            async function getUserBalance(account: string) {
+                const data = {
+                    contractAddress: coin.tokenAddr,
+                    methodName: "getUserBalance",
+                    methodDesc: "(Address addr) return BigInteger",
+                    args: [account],
+                };
+                const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
+                setBalanceLockNuls(res.result)
+                return res.result;
+            }
+
+            getUserBalance(account)
+
+            async function getProjectRaisePer() {
+                const data = {
+                    contractAddress: coin.raiseAddr,
+                    methodName: "percentageSold",
+                    methodDesc: "() return BigInteger",
+                    args: [],
+                };
+                const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
+                setPerBal(res.result)
+                return res.result;
+            }
+
+            getProjectRaisePer()
+
+
             return new Promise((resolve, reject) => {
                 BigNumber.config({ DECIMAL_PLACES: 8 });
 
@@ -84,6 +116,22 @@ export const ListProject : React.FC<Props>  = ({coin}) => {
     },[])
 
 
+    async function withdraw(
+    ) {
+        const data = {
+            from: account,
+            value: 0,
+            contractAddress: coin.lockAddr,
+            methodName: "withdrawAfterLock",
+            methodDesc:
+                "() return void",
+            args: [],
+        };
+        const res = await (window as unknown as NaboxWindow).nabox.contractCall(data);
+        return res.toString();
+    }
+
+
 
 
     return(
@@ -105,10 +153,10 @@ export const ListProject : React.FC<Props>  = ({coin}) => {
                             <button onClick={() => { setShowModal(true); setProjectId(1);}} style={{padding:"10px", cursor:"pointer", fontWeight:"bold", border:"0px", color:"white", backgroundColor:"rgb(50, 224, 141)", borderRadius:"4px"}}>Invest</button>
                         </div>
                         <div style={{padding:"0px 5px"}}>
-                            <div style={{width:"80px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width:"20%", backgroundColor:"rgb(50, 224, 141)"}}></div></div>
+                            <div style={{width:"80px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width:{perSold}, backgroundColor:"rgb(50, 224, 141)"}}></div></div>
                         </div>
                         <div>
-                            20%
+                            {perSold}%
                         </div>
                         <div>
                             <button
@@ -135,7 +183,17 @@ export const ListProject : React.FC<Props>  = ({coin}) => {
                         NULS Locked:
                     </div>
                     <div>
-                        <button style={{backgroundColor:"rgb(50, 224, 141)",
+                        {balanceLockNuls.toString()} NULS
+                    </div>
+                </div>
+                <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", padding:"10px"}}>
+                    <div>
+
+                    </div>
+                    <div>
+                        <button
+                            onClick={() => withdraw()}
+                            style={{backgroundColor:"rgb(50, 224, 141)",
                             padding:"8px",
                             borderRadius:"4px",
                             color:"white",
@@ -153,6 +211,16 @@ export const ListProject : React.FC<Props>  = ({coin}) => {
                     <div>
                         <Link href={coin.github} target="_blank">
                             <span style={{textDecoration:"underline"}}>Github Repository</span>
+                        </Link>
+                    </div>
+                </div>
+                <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:"10px"}}>
+                    <div>
+                        Telegram
+                    </div>
+                    <div>
+                        <Link href={coin.telegram} target="_blank">
+                            <span style={{textDecoration:"underline"}}>{coin.projectName} Group</span>
                         </Link>
                     </div>
                 </div>

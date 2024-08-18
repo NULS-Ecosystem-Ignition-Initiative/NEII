@@ -7,6 +7,9 @@ import {ModalInvest} from "../components/ModalInvest";
 import {useEffect, useState} from "react";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import {ListProject} from "../components/ListProject";
+import NaboxWindow from "../types/NaboxWindow";
+import BigNumber from "bignumber.js";
+import axios from "axios";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,6 +17,7 @@ export default function Home() {
 
 
     const [api, setAPI] = useState([])
+    const [account, setAccount] = useState("")
 
     useEffect(() => {
 
@@ -28,6 +32,19 @@ export default function Home() {
         }
         getProjects()
     }, [])
+
+    useEffect(() =>{
+
+        async function getTokenBalance() {
+
+            const naboxInfo:any = await (window as unknown as NaboxWindow).nabox.createSession();
+            console.log(naboxInfo)
+            const address = naboxInfo[0];
+            setAccount(address)
+
+        }
+        getTokenBalance()
+    },[])
 
   return (
     <>
@@ -74,7 +91,7 @@ export default function Home() {
 
                {
                    (api.length > 0 ) ? api.map((coin:any) =>
-                        <ListProject key={coin.id} coin={coin}/>
+                        <ListProject key={coin.id} coin={coin} account={account}/>
                    )
                        :
                        <>No Projects Listed!</>
