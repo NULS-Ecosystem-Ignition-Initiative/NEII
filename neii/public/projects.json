@@ -8,6 +8,7 @@
     "raiseAddr": "NULSd6HgrUzG6a9hFg13QDUXhYenS3qnJApNs",
     "tokenAddr": "NULSd6Hgp2NUYDbf4zVJK5LV6rrh5kiqb26Yo",
     "lockAddr": "NULSd6HgnT1cZiiwDe9md1iRwQfrSn5Rd4Dir",
+    "symbol": "ORA",
     "maxROI": "-",
     "poolAddr": "",
     "github": "https://github.com/NULS-Ecosystem-Ignition-Initiative/NEII-Nuls-Oracles",

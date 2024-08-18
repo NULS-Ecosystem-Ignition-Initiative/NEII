@@ -221,7 +221,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                                 Total Amount of Tokens:
                             </div>
                             <div>
-                                {new BigNumber(valueIn).multipliedBy(pricePerNuls).toString()} ORA
+                                {new BigNumber(valueIn).multipliedBy(pricePerNuls).toString()} {coin.symbol}
                             </div>
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0px"}}>
@@ -237,7 +237,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                                 Price per Nuls:
                             </div>
                             <div>
-                                {pricePerNuls.toString()} ORA
+                                {pricePerNuls.toString()} {coin.symbol}
                             </div>
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", padding:"5px 0px"}}>
