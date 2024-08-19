@@ -80,6 +80,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
 
             });
         }
+        getTokenBalance()
         async function getUserBalance(account: string) {
             const data = {
                 contractAddress: coin.tokenAddr,
@@ -90,16 +91,9 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
             const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
             return res.result;
         }
-        getTokenBalance()
 
-        async function allBall(){
 
-            let bal = await getTokenBalance()
 
-            setBalanceToken(bal?.toString)
-        }
-
-        allBall()
 
         async function getPricePerNuls() {
             const data = {

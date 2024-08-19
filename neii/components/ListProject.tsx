@@ -212,7 +212,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                     </div>
                     <div>
 
-                            <span>1.000.000</span>
+                            <span>1.000.000 {coin.symbol}</span>
 
                     </div>
                 </div>
