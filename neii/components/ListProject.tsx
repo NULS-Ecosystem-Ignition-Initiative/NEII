@@ -43,6 +43,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
     const [showModal, setShowModal] = useState(false);
     const [showMore, setShowMore] = useState(false);
     const [projectId, setProjectId] = useState(0);
+    const [lockTime, setLockTime] = useState("0")
 
     const [balanceLockNuls, setBalanceLockNuls] = useState("0")
     const [perSold, setPerBal] = useState("0")
@@ -82,6 +83,20 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
             }
 
             getProjectRaisePer()
+
+            async function getUserLockerTime() {
+                const data = {
+                    contractAddress: coin.lockAddr,
+                    methodName: "getUserLockTime",
+                    methodDesc: "(Address addr) return BigInteger",
+                    args: [account],
+                };
+                const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
+                setLockTime(res.result)
+                return res.result;
+            }
+
+            getUserLockerTime()
 
 
             return new Promise((resolve, reject) => {
@@ -151,7 +166,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                 <div style={{display:""}}>
                     <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                         <div>
-                            <button onClick={() => { setShowModal(true); setProjectId(1);}} style={{padding:"10px", cursor:"pointer", fontWeight:"bold", border:"0px", color:"white", backgroundColor:"rgb(50, 224, 141)", borderRadius:"4px"}}>Invest</button>
+                            <button onClick={() => { setShowModal(true); setProjectId(1);}} style={{padding:"10px", cursor:"pointer", fontWeight:"bold", border:"0px", color:"white", backgroundColor:"rgb(50, 224, 141)", borderRadius:"4px"}}>Donate</button>
                         </div>
                         <div style={{padding:"0px 5px"}}>
                             <div style={{width:"80px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width:perSold + "%", backgroundColor:"rgb(50, 224, 141)"}}></div></div>
@@ -185,6 +200,14 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                     </div>
                     <div>
                         {balanceLockNuls.toString()} NULS
+                    </div>
+                </div>
+                <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", padding:"10px"}}>
+                    <div>
+
+                    </div>
+                    <div>
+                        {(lockTime !== "0") ? lockTime : "-"}
                     </div>
                 </div>
                 <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", padding:"10px"}}>

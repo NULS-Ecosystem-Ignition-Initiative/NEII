@@ -37,6 +37,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
     const [valueIn, setValueIn] = useState("0")
     const [pricePerNuls, setPricePerNuls] = useState("0")
     const [alreadyRaised, setAlreadyRaised] = useState("0")
+
     const [account, setAccount] = useState("")
 
     const ip1 = "https://api.nuls.io/";
@@ -91,8 +92,6 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
             const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
             return res.result;
         }
-
-
 
 
         async function getPricePerNuls() {
