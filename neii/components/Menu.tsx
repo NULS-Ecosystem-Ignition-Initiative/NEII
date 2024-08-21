@@ -59,8 +59,15 @@ export const Menu: React.FC<Props>  = ({account}) => {
                 <div></div>
                 <div>
                     <Link href={"https://nulscan.io/address/info?address=" + account.toString()} target="_blank">
-                        <div style={{padding:"6px 10px", borderRadius:"4px",  backgroundColor:"rgb(50, 224, 141)" }}>
-                            <FaWallet />  {account?.substring(0,8)+"..."+ account?.substring(account?.length - 8)}
+                        <div style={{padding:"6px 10px", display:"flex", alignItems:"center", borderRadius:"4px",  backgroundColor:"rgb(50, 224, 141)" }}>
+
+                           <div style={{padding:"2px 6px 2px 2px", marginTop:"2px"}}>
+                               <FaWallet />
+                           </div>
+                            <div>
+                                {account?.substring(0,8)+"..."+ account?.substring(account?.length - 8)}
+                            </div>
+
                         </div>
                     </Link>
 

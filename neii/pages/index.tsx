@@ -11,6 +11,7 @@ import NaboxWindow from "../types/NaboxWindow";
 import BigNumber from "bignumber.js";
 import axios from "axios";
 import {Menu} from "../components/Menu";
+import {FaCircleInfo} from "react-icons/fa6";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -69,9 +70,17 @@ export default function Home() {
            <div style={{fontSize:"50px", color:"white", marginTop:"20px", textAlign:"center"}}>
                NULS ECOSYSTEM IGNITION INITIATIVE
            </div>
-           <div style={{padding:"45px", textAlign:"center"}}>
+           <div style={{padding:"45px", textAlign:"center", display:"flex", justifyContent:"center"}}>
                <Link href="https://docs.google.com/document/d/19rbXoD9onFbnvLUCfynYRmlWj-z7Dp9fK-ZcIR6_gPc/edit?usp=sharing" target="_blank">
-                   <button style={{padding:"10px", fontWeight:"bold", cursor:"pointer", border:"0px", color:"white", backgroundColor:"rgb(50, 224, 141)", borderRadius:"4px"}}>Know More About Us</button>
+                   <button style={{padding:"10px", display:"flex", justifyContent:"center", alignItems:"center", fontWeight:"bold", cursor:"pointer", border:"0px", color:"white", backgroundColor:"rgb(50, 224, 141)", borderRadius:"4px"}}>
+
+                       <div style={{marginTop:"2px", padding:"0px 8px"}}>
+                           <FaCircleInfo />
+                       </div>
+                       <div>
+                           Know More About Us
+                       </div>
+                      </button>
 
                </Link>
              </div>

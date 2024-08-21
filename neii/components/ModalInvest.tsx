@@ -184,7 +184,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
             }} onClick={() =>{}}>
                 <div >
                     <div style={{textAlign:"center", padding:"10px 0px 20px 0px"}}>
-                        <h1>Invest</h1>
+                        <h1>Donate</h1>
                     </div>
                     <div style={{display:"flex", justifyContent:"space-between", marginTop:"10px"}}>
                         <div>Balance:</div>
@@ -244,7 +244,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                     </div>
                     <div style={{display:"flex",textAlign:"center"}}>
                         <button onClick={() => displayToggle(false)} style={{padding:"5px 10px", borderRadius:"5px", cursor:"pointer", width:"50%"}}>Cancel</button>
-                        <button onClick={() => buyTokens(valueIn)} style={{padding:"8px 10px", borderRadius:"5px", cursor:"pointer", color:"white", width:"50%", backgroundColor:"rgb(50, 224, 141)", border:"0px"}}>Invest</button>
+                        <button onClick={() => buyTokens(valueIn)} style={{padding:"8px 10px", borderRadius:"5px", cursor:"pointer", color:"white", width:"50%", backgroundColor:"rgb(50, 224, 141)", border:"0px"}}>Donate</button>
                     </div>
                 </div>
 

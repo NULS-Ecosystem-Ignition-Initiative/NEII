@@ -169,7 +169,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                             <button onClick={() => { setShowModal(true); setProjectId(1);}} style={{padding:"10px", cursor:"pointer", fontWeight:"bold", border:"0px", color:"white", backgroundColor:"rgb(50, 224, 141)", borderRadius:"4px"}}>Donate</button>
                         </div>
                         <div style={{padding:"0px 5px"}}>
-                            <div style={{width:"80px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width:perSold + "%", backgroundColor:"rgb(50, 224, 141)"}}></div></div>
+                            <div style={{width:"80px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width: new BigNumber(perSold).dividedBy(10000).toString() + "%", backgroundColor:"rgb(50, 224, 141)"}}></div></div>
                         </div>
                         <div>
                             {perSold}%
@@ -245,7 +245,13 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                     </div>
                     <div>
                         <Link href={coin.github} target="_blank">
-                            <span style={{textDecoration:"underline"}}>Github Repository</span><LuExternalLink />
+                            <div style={{display:"flex", alignItems:"center"}}>
+                                <div style={{padding:"0px 4px"}}>
+                                    <span style={{textDecoration:"underline"}}>Github Repository</span>
+                                </div>
+                                <div style={{marginTop:"5px"}}> <LuExternalLink /></div>
+                            </div>
+
                         </Link>
                     </div>
                 </div>
@@ -255,8 +261,13 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                     </div>
                     <div>
                         <Link href={coin.telegram} target="_blank">
-                            <span style={{textDecoration:"underline"}}>{coin.projectName} Group</span><LuExternalLink />
-                        </Link>
+                            <div style={{display:"flex", alignItems:"center"}}>
+                                <div style={{padding:"0px 4px"}}>
+                                    <span style={{textDecoration:"underline"}}>{coin.projectName} Group</span>
+                                </div>
+                                <div style={{marginTop:"5px"}}> <LuExternalLink /></div>
+                            </div>
+                            </Link>
                     </div>
                 </div>
             </div>
@@ -275,7 +286,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                             {descript.name}
                         </div>
                         <div>
-                            {descript.amount} NULS
+                            {new BigNumber(descript.amount).toString()} NULS
                         </div>
                     </div>
                 </>)}
