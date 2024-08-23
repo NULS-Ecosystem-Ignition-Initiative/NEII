@@ -131,7 +131,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
 
 
        // getTokenBalance()
-    },[showModal])
+    },[showModal, account])
 
 
     async function withdraw(
