@@ -41,7 +41,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
 
 
     const [showModal, setShowModal] = useState(false);
-    const [showMore, setShowMore] = useState(false);
+    const [showMore, setShowMore] = useState(true);
     const [projectId, setProjectId] = useState(0);
     const [lockTime, setLockTime] = useState("0")
 
@@ -51,7 +51,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
     useEffect(() =>{
 
         async function getTokenBalance() {
-            
+
             return new Promise((resolve, reject) => {
                 BigNumber.config({ DECIMAL_PLACES: 8 });
 
@@ -85,7 +85,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
 
             async function getUserBalance(account: string) {
                 const data = {
-                    contractAddress: coin.tokenAddr,
+                    contractAddress: coin.lockAddr,
                     methodName: "getUserBalance",
                     methodDesc: "(Address addr) return BigInteger",
                     args: [account],
@@ -204,7 +204,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                         NULS Locked:
                     </div>
                     <div>
-                        {balanceLockNuls?.toString()} NULS
+                        { new BigNumber(balanceLockNuls).dividedBy(Math.pow(10,8)).toString()} NULS
                     </div>
                 </div>
                 <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", padding:"10px"}}>
