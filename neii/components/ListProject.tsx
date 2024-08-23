@@ -43,7 +43,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
     const [showModal, setShowModal] = useState(false);
     const [showMore, setShowMore] = useState(true);
     const [projectId, setProjectId] = useState(0);
-    const [lockTime, setLockTime] = useState("0")
+    const [lockTime, setLockTime] = useState<any>("0")
 
     const [balanceLockNuls, setBalanceLockNuls] = useState("0")
     const [perSold, setPerBal] = useState("0")
@@ -228,7 +228,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                             border:"0px",
                             fontWeight:"bold",
                                 cursor:"pointer"
-                        }} disabled={"disabled"}>Withdraw Locked NULS</button>
+                        }} disabled={true}>Withdraw Locked NULS</button>
                     </div>
                 </div>
             </div>
