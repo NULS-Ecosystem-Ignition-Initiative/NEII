@@ -100,6 +100,18 @@ a {
   text-decoration: none;
 }
 
+button{
+  background-color: rgb(50, 224, 141);
+  color: white;
+}
+
+button:disabled,
+button[disabled]{
+  background-color: #888888;
+  color: black;
+}
+
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;

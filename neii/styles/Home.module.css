@@ -7,6 +7,28 @@
   font-family: Arimo;
 }
 
+.rotate{
+  -webkit-transform: rotateX(180deg);
+  transform: rotateX(180deg);
+}
+
+.fadein {
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 1s;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .listProject{
   display: flex;
   flex-direction: row;

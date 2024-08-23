@@ -5,14 +5,15 @@
     "NULSToRaise": 100000,
     "startDate" : 28137242,
     "endDate" : 54378534,
-    "raiseAddr": "NULSd6HgrUzG6a9hFg13QDUXhYenS3qnJApNs",
-    "tokenAddr": "NULSd6Hgp2NUYDbf4zVJK5LV6rrh5kiqb26Yo",
+    "raiseAddr": "NULSd6HgqBySFD6LG51yQjPXk6bdMvZ9iuZGh",
+    "tokenAddr": "NULSd6HguPMEwrQL2UNPmm5xxPVBRb4CSt8zy",
     "lockAddr": "NULSd6HgnT1cZiiwDe9md1iRwQfrSn5Rd4Dir",
     "symbol": "ORA",
     "maxROI": "-",
     "poolAddr": "",
     "github": "https://github.com/NULS-Ecosystem-Ignition-Initiative/NEII-Nuls-Oracles",
     "telegram": "https://t.me/+CQhsKZNaO2NhMTdk",
+    "whitepaper": "https://docs.google.com/document/d/19rbXoD9onFbnvLUCfynYRmlWj-z7Dp9fK-ZcIR6_gPc/edit?usp=sharing",
     "description" : [
       {
         "name": "Min 2 Servers Up Running for 3 years",

@@ -51,60 +51,13 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
     useEffect(() =>{
 
         async function getTokenBalance() {
-
-            const naboxInfo:any = await (window as unknown as NaboxWindow).nabox.createSession();
-            console.log(naboxInfo)
-            const address = naboxInfo[0];
-
-            async function getUserBalance(account: string) {
-                const data = {
-                    contractAddress: coin.tokenAddr,
-                    methodName: "getUserBalance",
-                    methodDesc: "(Address addr) return BigInteger",
-                    args: [account],
-                };
-                const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
-                setBalanceLockNuls(res.result)
-                return res.result;
-            }
-
-            getUserBalance(account)
-
-            async function getProjectRaisePer() {
-                const data = {
-                    contractAddress: coin.raiseAddr,
-                    methodName: "percentageSold",
-                    methodDesc: "() return BigInteger",
-                    args: [],
-                };
-                const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
-                setPerBal(res.result)
-                return res.result;
-            }
-
-            getProjectRaisePer()
-
-            async function getUserLockerTime() {
-                const data = {
-                    contractAddress: coin.lockAddr,
-                    methodName: "getUserLockTime",
-                    methodDesc: "(Address addr) return BigInteger",
-                    args: [account],
-                };
-                const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
-                setLockTime(res.result)
-                return res.result;
-            }
-
-            getUserLockerTime()
-
-
+            
             return new Promise((resolve, reject) => {
                 BigNumber.config({ DECIMAL_PLACES: 8 });
 
                 axios
                     .post(
-                        ip1 + "api/accountledger/balance/" + address,
+                        ip1 + "api/accountledger/balance/" + account,
                         {
                             assetChainId: 1,
                             assetId: 1,
@@ -128,8 +81,57 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
 
             });
         }
+        getTokenBalance()
+
+            async function getUserBalance(account: string) {
+                const data = {
+                    contractAddress: coin.tokenAddr,
+                    methodName: "getUserBalance",
+                    methodDesc: "(Address addr) return BigInteger",
+                    args: [account],
+                };
+                const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
+                setBalanceLockNuls(res.result)
+                return res.result;
+            }
+
+            getUserBalance(account)
+
+            async function getProjectRaisePer() {
+
+                const data = {
+                    contractAddress: coin.raiseAddr,
+                    methodName: "percentageSold",
+                    methodDesc: "() return BigInteger",
+                    args: [],
+                };
+                const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
+                console.log(res.result)
+                setPerBal(res.result)
+                return res.result;
+            }
+
+            getProjectRaisePer()
+
+            async function getUserLockerTime() {
+                const data = {
+                    contractAddress: coin.lockAddr,
+                    methodName: "getUserLockTime",
+                    methodDesc: "(Address addr) return BigInteger",
+                    args: [account],
+                };
+                const res = await (window as unknown as NaboxWindow).nabox.invokeView(data);
+                setLockTime(res.result)
+                return res.result;
+            }
+
+            getUserLockerTime()
+
+
+
+
        // getTokenBalance()
-    },[])
+    },[showModal])
 
 
     async function withdraw(
@@ -169,10 +171,10 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                             <button onClick={() => { setShowModal(true); setProjectId(1);}} style={{padding:"10px", cursor:"pointer", fontWeight:"bold", border:"0px", color:"white", backgroundColor:"rgb(50, 224, 141)", borderRadius:"4px"}}>Donate</button>
                         </div>
                         <div style={{padding:"0px 5px"}}>
-                            <div style={{width:"80px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width: new BigNumber(perSold).dividedBy(10000).toString() + "%", backgroundColor:"rgb(50, 224, 141)"}}></div></div>
+                            <div style={{width:"60px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width: new BigNumber(perSold).dividedBy(100).toString() + "%", backgroundColor:"rgb(50, 224, 141)"}}></div></div>
                         </div>
                         <div>
-                            {perSold}%
+                            { new BigNumber(perSold).dividedBy(100).toString()}%
                         </div>
                         <div>
                             <button
@@ -184,22 +186,25 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                                 color:"white",
                                 cursor:"pointer",
                                 fontSize:"16px",
-                                padding:"6px 10px",
+                                padding:"8px 8px",
                                 marginLeft:"5px"
                             }}>
-                                <IoIosArrowDropdownCircle />
+                                <div className={(showMore) ? styles.rotate :""} style={{display:"flex", alignItems:"center", }}>
+                                    <IoIosArrowDropdownCircle />
+                                </div>
+
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div style={{display:(showMore) ? "block": "none"}}>
+            <div className={styles.fadein} style={{display:(showMore) ? "block": "none"}}>
                 <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", padding:"10px"}}>
                     <div>
                         NULS Locked:
                     </div>
                     <div>
-                        {balanceLockNuls.toString()} NULS
+                        {balanceLockNuls?.toString()} NULS
                     </div>
                 </div>
                 <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", padding:"10px"}}>
@@ -207,7 +212,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
 
                     </div>
                     <div>
-                        {(lockTime !== "0") ? lockTime : "-"}
+                        {(lockTime !== "0") ?  new Date(lockTime * 1000).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : "-"}
                     </div>
                 </div>
                 <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", padding:"10px"}}>
@@ -217,18 +222,17 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                     <div>
                         <button
                             onClick={() => withdraw()}
-                            style={{backgroundColor:"rgb(50, 224, 141)",
+                            style={{
                             padding:"8px",
                             borderRadius:"4px",
-                            color:"white",
                             border:"0px",
                             fontWeight:"bold",
                                 cursor:"pointer"
-                        }}>Withdraw Locked NULS</button>
+                        }} disabled={"disabled"}>Withdraw Locked NULS</button>
                     </div>
                 </div>
             </div>
-            <div style={{display:(showMore) ? "block": "none"}}>
+            <div className={styles.fadein} style={{display:(showMore) ? "block": "none"}}>
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:"10px"}}>
                     <div>
                         Total Supply
@@ -270,8 +274,38 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                             </Link>
                     </div>
                 </div>
+                <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:"10px"}}>
+                    <div>
+                        {coin.projectName} Whitepaper
+                    </div>
+                    <div>
+                        <Link href={coin.telegram} target="_blank">
+                            <div style={{display:"flex", alignItems:"center"}}>
+                                <div style={{padding:"0px 4px"}}>
+                                    <span style={{textDecoration:"underline"}}>Whitepaper</span>
+                                </div>
+                                <div style={{marginTop:"5px"}}> <LuExternalLink /></div>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+                <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:"10px"}}>
+                    <div>
+                        Token Address
+                    </div>
+                    <div>
+                        <Link href={"https://nulscan.io/contracts/info?contractAddress=" + coin.tokenAddr} target="_blank">
+                            <div style={{display:"flex", alignItems:"center"}}>
+                                <div style={{padding:"0px 4px"}}>
+                                    <span style={{textDecoration:"underline"}}>{coin.tokenAddr.substring(0,8) + "..."+ coin.tokenAddr.substring(coin.tokenAddr.length - 8)}</span>
+                                </div>
+                                <div style={{marginTop:"5px"}}> <LuExternalLink /></div>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
             </div>
-            <div style={{display:(showMore) ? "block" : "none"}}>
+            <div  className={styles.fadein} style={{display:(showMore) ? "block" : "none"}}>
                 <div className={styles.listDescription} style={{fontWeight:"bold"}}>
                     <div>
                         Allocation Description

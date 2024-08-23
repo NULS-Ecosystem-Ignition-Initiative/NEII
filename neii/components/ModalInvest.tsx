@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import BigNumber from "bignumber.js";
 import axios, {all} from "axios";
 import Image from "next/image";
 import NaboxWindow from "../types/NaboxWindow";
+import {LuExternalLink} from "react-icons/lu";
+import Link from "next/link";
 //import styles from '../../styles/Creator/MyPage/MyPage.module.css'
 //import { ConnectButton } from '@rainbow-me/rainbowkit';
 //import Link from "next/link";
@@ -39,6 +41,11 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
     const [alreadyRaised, setAlreadyRaised] = useState("0")
 
     const [account, setAccount] = useState("")
+
+    const [transactionUrl, setTransactionUrl] = useState("")
+    const [submitting, setSubmitting] = useState<boolean>(false);
+
+    const isMounted = useRef(false);
 
     const ip1 = "https://api.nuls.io/";
 
@@ -124,6 +131,20 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
 
     },[])
 
+    useEffect(() => {
+        if (isMounted.current) {
+            if (transactionUrl !== "") {
+                setSubmitting(true);
+                const timeout = setTimeout(() => {
+                    setSubmitting(false);
+                }, 11200);
+                return () => clearTimeout(timeout);
+            }
+        } else {
+            isMounted.current = true;
+        }
+    }, [transactionUrl]);
+
     async function max(){
 
         setValueIn(new BigNumber(balanceNuls).dividedBy(Math.pow(10, 8))
@@ -144,8 +165,11 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                 "(Address onBehalfOf, BigInteger amount) return void",
             args: [account.toString(), BigNumber(amount).multipliedBy(Math.pow(10, 8)).toString()],
         };
-        const res = await (window as unknown as NaboxWindow).nabox.contractCall(data);
-        return res.toString();
+        const res = await (window as unknown as NaboxWindow).nabox.contractCall(data).then((res: any) =>{
+                setTransactionUrl(res)
+                displayToggle(false)
+        });
+        ;
     }
 
 
@@ -155,7 +179,8 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
 
 
     return(
-        <div style={{
+        <>
+            <div style={{
             position:"fixed",
             top:"0vh",
             left:"0%",
@@ -243,13 +268,27 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                         </div>
                     </div>
                     <div style={{display:"flex",textAlign:"center"}}>
-                        <button onClick={() => displayToggle(false)} style={{padding:"5px 10px", borderRadius:"5px", cursor:"pointer", width:"50%"}}>Cancel</button>
+                        <button onClick={() => displayToggle(false)} style={{backgroundColor:"white", color:"black", padding:"5px 10px", borderRadius:"5px", cursor:"pointer", width:"50%"}}>Cancel</button>
                         <button onClick={() => buyTokens(valueIn)} style={{padding:"8px 10px", borderRadius:"5px", cursor:"pointer", color:"white", width:"50%", backgroundColor:"rgb(50, 224, 141)", border:"0px"}}>Donate</button>
                     </div>
                 </div>
 
             </div>
         </div>
+            <div style={{position:"fixed", display:(submitting) ? "block" : "none",padding:"10px 20px", borderRadius:"4px", backgroundColor:"rgba(50, 224, 141, 0.6)", top:"70px", right:"10px"}}>
 
+                <Link href={"https://nulscan.io/tx/"+ transactionUrl} target="_blank">
+                    <div style={{ display:"flex", alignItems:"center"}}>
+                        <div style={{textDecoration:"underline", cursor:"pointer"}}>
+                            Tx Submitted, wait a few seconds
+                        </div>
+                        <div style={{padding:"0px 8px"}}>
+                            <LuExternalLink />
+                        </div>
+                    </div>
+
+                </Link>
+            </div>
+</>
     )
 }
