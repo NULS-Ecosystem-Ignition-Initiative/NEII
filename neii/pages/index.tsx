@@ -44,9 +44,31 @@ export default function Home() {
             const address = naboxInfo[0];
             setAccount(address)
 
+
+
         }
         getTokenBalance()
     },[])
+
+    useEffect(() => {
+        var userDevice = navigator.userAgent;
+        if (
+            !userDevice.match(/Android|webOS|iPhone|iPod|BlackBerry/i) &&
+            typeof (window as unknown as NaboxWindow).nabox != "undefined"
+        ) {
+            (window as unknown as NaboxWindow).nabox.on(
+                "accountsChanged",
+                (accounts) => {
+                    if (accounts.length) {
+                        localStorage.setItem("address", accounts[0]);
+                        setAccount(accounts[0]);
+                    }
+                }
+            );
+        }
+    }, []);
+
+
 
   return (
     <>
