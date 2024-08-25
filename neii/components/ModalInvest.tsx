@@ -277,7 +277,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
         </div>
             <div style={{position:"fixed", display:(submitting) ? "block" : "none",padding:"10px 20px", borderRadius:"4px", backgroundColor:"rgba(50, 224, 141, 0.6)", top:"70px", right:"10px"}}>
 
-                <Link href={"https://nulscan.io/tx/"+ transactionUrl} target="_blank">
+                <Link href={"https://nulscan.io/transaction/info?hash="+ transactionUrl} target="_blank">
                     <div style={{ display:"flex", alignItems:"center"}}>
                         <div style={{textDecoration:"underline", cursor:"pointer"}}>
                             Tx Submitted, wait a few seconds
