@@ -279,7 +279,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                         {coin.projectName} Whitepaper
                     </div>
                     <div>
-                        <Link href={coin.telegram} target="_blank">
+                        <Link href={coin.whitepaper} target="_blank">
                             <div style={{display:"flex", alignItems:"center"}}>
                                 <div style={{padding:"0px 4px"}}>
                                     <span style={{textDecoration:"underline"}}>Whitepaper</span>
