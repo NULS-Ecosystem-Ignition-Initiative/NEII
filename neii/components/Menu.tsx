@@ -58,7 +58,7 @@ export const Menu: React.FC<Props>  = ({account}) => {
                         justifyContent:"space-between", width:"100%"}}>
                 <div></div>
                 <div>
-                    <Link href={"https://nulscan.io/address/info?address=" + account.toString()} target="_blank">
+                    <Link href={"https://nulscan.io/address/info?address=" + account?.toString()} target="_blank">
                         <div style={{padding:"6px 10px", display:"flex", alignItems:"center", borderRadius:"4px",  backgroundColor:"rgb(50, 224, 141)" }}>
 
                            <div style={{padding:"2px 6px 2px 2px", marginTop:"2px"}}>

@@ -163,7 +163,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
             methodName: "buyTokens",
             methodDesc:
                 "(Address onBehalfOf, BigInteger amount) return void",
-            args: [account.toString(), BigNumber(amount).multipliedBy(Math.pow(10, 8)).toString()],
+            args: [account?.toString(), BigNumber(amount).multipliedBy(Math.pow(10, 8))?.toString()],
         };
         const res = await (window as unknown as NaboxWindow).nabox.contractCall(data).then((res: any) =>{
                 setTransactionUrl(res)
@@ -239,7 +239,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                                 Total Amount of Tokens:
                             </div>
                             <div>
-                                {new BigNumber(valueIn).multipliedBy(pricePerNuls).toString()} {coin.symbol}
+                                {new BigNumber(valueIn).multipliedBy(pricePerNuls)?.toString()} {coin.symbol}
                             </div>
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0px"}}>
@@ -247,7 +247,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                                 Already Raised:
                             </div>
                             <div>
-                                {new BigNumber(alreadyRaised).dividedBy(Math.pow(10,8)).toString()} NULS
+                                {new BigNumber(alreadyRaised).dividedBy(Math.pow(10,8))?.toString()} NULS
                             </div>
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0px"}}>
@@ -255,7 +255,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                                 Price per Nuls:
                             </div>
                             <div>
-                                {pricePerNuls.toString()} {coin.symbol}
+                                {pricePerNuls?.toString()} {coin.symbol}
                             </div>
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", padding:"5px 0px"}}>

@@ -146,7 +146,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
             args: [],
         };
         const res = await (window as unknown as NaboxWindow).nabox.contractCall(data);
-        return res.toString();
+        return res?.toString();
     }
 
 
@@ -171,10 +171,10 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                             <button onClick={() => { setShowModal(true); setProjectId(1);}} style={{padding:"10px", cursor:"pointer", fontWeight:"bold", border:"0px", color:"white", backgroundColor:"rgb(50, 224, 141)", borderRadius:"4px"}}>Donate</button>
                         </div>
                         <div style={{padding:"0px 5px"}}>
-                            <div style={{width:"60px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width: new BigNumber(perSold).dividedBy(100).toString() + "%", backgroundColor:"rgb(50, 224, 141)"}}></div></div>
+                            <div style={{width:"60px", height:"20px", backgroundColor:"white", minHeight:"32px", borderRadius:"4px"}}><div style={{height:"100%",  borderRadius:"4px", width: new BigNumber(perSold).dividedBy(100)?.toString() + "%", backgroundColor:"rgb(50, 224, 141)"}}></div></div>
                         </div>
                         <div>
-                            { new BigNumber(perSold).dividedBy(100).toString()}%
+                            { new BigNumber(perSold).dividedBy(100)?.toString()}%
                         </div>
                         <div>
                             <button
@@ -204,7 +204,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                         NULS Locked:
                     </div>
                     <div>
-                        { new BigNumber(balanceLockNuls).dividedBy(Math.pow(10,8)).toString()} NULS
+                        { new BigNumber(balanceLockNuls).dividedBy(Math.pow(10,8))?.toString()} NULS
                     </div>
                 </div>
                 <div style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between", padding:"10px"}}>
@@ -320,7 +320,7 @@ export const ListProject : React.FC<Props>  = ({coin, account}) => {
                             {descript.name}
                         </div>
                         <div>
-                            {new BigNumber(descript.amount).toString()} NULS
+                            {new BigNumber(descript.amount)?.toString()} NULS
                         </div>
                     </div>
                 </>)}
