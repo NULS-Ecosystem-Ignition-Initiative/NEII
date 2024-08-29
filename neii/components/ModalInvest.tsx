@@ -178,6 +178,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
 
 
 
+
     return(
         <>
             <div style={{
@@ -259,7 +260,7 @@ export const ModalInvest: React.FC<Props>  = ({display, displayToggle, project, 
                             </div>
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", padding:"5px 0px"}}>
-                            <div>
+                            <div >
                                 Project:
                             </div>
                             <div>
